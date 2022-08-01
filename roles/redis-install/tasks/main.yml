@@ -1,0 +1,22 @@
+---
+# tasks file for redis-install
+- name: Get repository key
+  ansible.builtin.get_url:
+    url: https://packages.redis.io/gpg
+    dest: /tmp/redis.gpg
+    mode: 0644
+
+- name: Add repository key
+  ansible.builtin.command:
+    cmd: gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg /tmp/redis.gpg
+    creates: /usr/share/keyrings/redis-archive-keyring.gpg
+
+- name: Add repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb {{ ansible_distribution_release }} main"
+    filename: redis
+
+- name: Install redis
+  ansible.builtin.apt:
+    name: redis
+    update_cache: true
