@@ -1,0 +1,4 @@
+[all]
+redis-cluster-1 ansible_host=192.168.33.10 ansible_ssh_private_key_file=.vagrant/machines/redis-cluster-1/virtualbox/private_key ansible_ssh_user=vagrant
+redis-cluster-2 ansible_host=192.168.33.11 ansible_ssh_private_key_file=.vagrant/machines/redis-cluster-2/virtualbox/private_key ansible_ssh_user=vagrant
+redis-cluster-3 ansible_host=192.168.33.12 ansible_ssh_private_key_file=.vagrant/machines/redis-cluster-3/virtualbox/private_key ansible_ssh_user=vagrant

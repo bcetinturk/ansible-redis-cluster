@@ -1,4 +1,24 @@
-- hosts: all
+---
+- name: Install and configure Redis cluster
+  hosts: all
   become: true
   roles:
     - redis-install
+
+- name: Start Redis cluster
+  hosts: redis-cluster-1
+  tasks:
+    - name: Set cluster_string
+      ansible.builtin.set_fact:
+        cluster_string: "{{ groups['all'] | map('extract', hostvars, ['ansible_host']) | product([':6379']) | map('join') | join(' ') }}"
+
+    - name: debug
+      ansible.builtin.debug:
+        var:
+          - groups
+          - cluster_string
+
+    - name: "Start Redis cluster"
+      ansible.builtin.command:
+        cmd: "redis-cli --cluster create {{ cluster_string }} --cluster-yes"
+        creates: /var/lib/redis/nodes-6379.conf

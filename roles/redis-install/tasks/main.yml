@@ -20,3 +20,11 @@
   ansible.builtin.apt:
     name: redis
     update_cache: true
+
+- name: Copy redis.conf file
+  ansible.builtin.copy:
+    src: redis.conf
+    dest: /etc/redis/redis.conf
+    backup: true
+    mode: 0640
+  notify: "redis-restart"

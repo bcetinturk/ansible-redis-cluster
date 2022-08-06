@@ -17,10 +17,6 @@ Vagrant.configure("2") do |config|
       vm_config.vm.provider "virtualbox" do |v|
         v.name = machine["name"]
       end
-
-      vm_config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbook.yml"
-      end
     end
   end
 end
